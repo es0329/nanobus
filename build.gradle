@@ -1,0 +1,38 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
+
+repositories {
+    mavenCentral()
+}
+
+version = '1.0.0'
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+}
+
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier "javadoc"
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
